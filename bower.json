@@ -1,0 +1,41 @@
+{
+  "name": "xhr-adaptor-js",
+  "version": "0.1.0",
+  "authors": [
+    "Nick Weedon <nick@weedon.org.au>"
+  ],
+  "description": "Javascript XHR proxy library which provides an easily overridable 'adaptor' class that wraps the underlying XHR object (which may be a COM object on old IE browsers)",
+  "main": "dist/xhr-adaptor-js.min.js",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "adaptor",
+    "proxy",
+    "wrapper",
+    "interceptor",
+    "ajax",
+    "xhr",
+    "xmlHttpRequest"
+  ],
+  "license": "MIT",
+  "homepage": "xhr-adaptor-js.weedon.org.au",
+  "ignore": [
+    ".idea",
+    "design",
+    "doc_resource",
+    "src",
+    "test",
+    ".gitignore",
+    "Gruntfile.js",
+    "README.md",
+    "jsdoc.conf.json",
+    "karma.conf.js",
+    "package.json"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "requirejs": "~2.1.15",
+    "jquery": "~2.1.3"
+  }
+}
