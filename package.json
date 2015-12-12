@@ -1,5 +1,5 @@
 {
-  "name": "xhr-adaptor-js",
+  "name": "xhr-adaptor-bq-js",
   "version": "0.0.1",
   "description": "Javascript XHR proxy library which provides an easily overridable 'adaptor' class that wraps the underlying XHR object (which may be a COM object on old IE browsers)",
   "main": "saml-ecp-js.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@git.weedon.org.au:red-wyvern/xhr-adaptor-js.git"
+    "url": "git@git.weedon.org.au:red-wyvern/xhr-adaptor-bq-js.git"
   },
   "keywords": [
     "saml",

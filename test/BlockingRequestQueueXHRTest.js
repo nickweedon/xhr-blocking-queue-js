@@ -4,7 +4,7 @@ describe('BlockingRequestQueueXHR Test', function() {
     var xhrTestUtils = null;
 
     beforeEach(function(done) {
-        require(["xhr-adaptor-js", "xhrTestUtils"], function(xhrAdaptorJsNS, xhrTestUtilsNS) {
+        require(["xhr-adaptor-bq-js", "xhrTestUtils"], function(xhrAdaptorJsNS, xhrTestUtilsNS) {
             xhrAdaptorJs = xhrAdaptorJsNS;
             xhrTestUtils = xhrTestUtilsNS;
             done();

@@ -11,15 +11,10 @@ require.config({
 
   baseUrl: '/base/test',
 
-  shim: {
-	  'jquery-colorbox' : {
-		  deps : ['jquery']
-	  }
-  },
   paths: {
-    jquery: "../bower_components/jquery/dist/jquery",
     requirejs: "../bower_components/requirejs/require",
-    "xhr-adaptor-js": "../dist/xhr-adaptor-js",
+    "xhr-adaptor-js": "../bower_components/xhr-adaptor-js/dist/xhr-adaptor-js",
+    "xhr-adaptor-bq-js": "../dist/xhr-adaptor-bq-js",
     "xhrTestUtils": "util/xhrTestUtils"
   },
   packages: [
