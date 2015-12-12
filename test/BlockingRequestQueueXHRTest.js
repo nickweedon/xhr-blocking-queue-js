@@ -1,10 +1,12 @@
 describe('BlockingRequestQueueXHR Test', function() {
 
+    var xhrBQJs = null;
     var xhrAdaptorJs = null;
     var xhrTestUtils = null;
 
     beforeEach(function(done) {
-        require(["xhr-adaptor-bq-js", "xhrTestUtils"], function(xhrAdaptorJsNS, xhrTestUtilsNS) {
+        require(["xhr-blocking-queue-js", "xhr-adaptor-js", "xhrTestUtils"], function(xhrBQJsNS, xhrAdaptorJsNS, xhrTestUtilsNS) {
+            xhrBQJs = xhrBQJsNS;
             xhrAdaptorJs = xhrAdaptorJsNS;
             xhrTestUtils = xhrTestUtilsNS;
             done();
@@ -13,12 +15,12 @@ describe('BlockingRequestQueueXHR Test', function() {
 
     afterEach(function () {
         xhrAdaptorJs.manager.resetXHR();
-        xhrAdaptorJs.BlockingRequestQueueXHR.clearResponseHandlers();
+        xhrBQJs.BlockingRequestQueueXHR.clearResponseHandlers();
     });
 
     it("Can instantiate successfully", function () {
-        var xhr = new xhrAdaptorJs.BlockingRequestQueueXHR(xhrTestUtils.createNativeXhr());
-        assert.ok( xhr !== undefined, "Failed to instantiate xhrAdaptorJs.BlockingRequestQueueXHR" );
+        var xhr = new xhrBQJs.BlockingRequestQueueXHR(xhrTestUtils.createNativeXhr());
+        assert.ok( xhr !== undefined, "Failed to instantiate xhrBQJs.BlockingRequestQueueXHR" );
     });
 
     it("Can send to URLs not matching the filter", function (done) {
@@ -28,8 +30,8 @@ describe('BlockingRequestQueueXHR Test', function() {
                 assert.ok(false, "Not expecting this to be called");
             }
         };
-        xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("http://www.google.com", requestHandler.doStuff, requestHandler);
-        xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
+        xhrBQJs.BlockingRequestQueueXHR.registerResponseHandler("http://www.google.com", requestHandler.doStuff, requestHandler);
+        xhrAdaptorJs.manager.injectWrapper(xhrBQJs.BlockingRequestQueueXHR);
 
         xhr = new XMLHttpRequest();
         xhr.open("get", "data/simpleSentence.txt");
@@ -49,8 +51,8 @@ describe('BlockingRequestQueueXHR Test', function() {
             responseHandlerCallback();
             doContinue();
         };
-        xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
-        xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
+        xhrBQJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
+        xhrAdaptorJs.manager.injectWrapper(xhrBQJs.BlockingRequestQueueXHR);
 
         xhr = new XMLHttpRequest();
         xhr.open("get", "data/simpleSentence.txt");
@@ -82,8 +84,8 @@ describe('BlockingRequestQueueXHR Test', function() {
                 doContinue(true);
             }
         };
-        xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
-        xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
+        xhrBQJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
+        xhrAdaptorJs.manager.injectWrapper(xhrBQJs.BlockingRequestQueueXHR);
 
         xhr = new XMLHttpRequest();
         xhr.open("get", "data/needAuth.txt");
@@ -135,8 +137,8 @@ describe('BlockingRequestQueueXHR Test', function() {
             }
         };
 
-        xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
-        xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
+        xhrBQJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
+        xhrAdaptorJs.manager.injectWrapper(xhrBQJs.BlockingRequestQueueXHR);
 
         xhr = new XMLHttpRequest();
         xhr.open("get", "data/needAuth.txt");

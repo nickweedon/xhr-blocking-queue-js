@@ -1,4 +1,4 @@
-xhr-adaptor-bq-js
+xhr-blocking-queue-js
 =================
 
 Building

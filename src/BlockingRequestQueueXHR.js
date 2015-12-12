@@ -1,4 +1,4 @@
-var xhrAdaptorJs = xhrAdaptorJs || {};
+var xhrBQJs = xhrBQJs || {};
 
 /**
  * @summary The BlockingRequestQueueXHR allows a response to be intercepted and processed while queuing all other requests until processing is complete
@@ -10,21 +10,21 @@ var xhrAdaptorJs = xhrAdaptorJs || {};
  * once the user is authenticated, the queued requests can then continue through to the server where they can be processed normally, in an authenticated context.
  *
  * @class
- * @memberOf xhrAdaptorJs
+ * @memberOf xhrBQJs
  * @augments xhrAdaptorJs.XHRWrapper
  * @tutorial BlockingRequestQueue
  *
  * @param {XMLHttpRequest} impl The implementation object that this BlockingRequestQueueXHR object is to wrap.
  *
  */
-xhrAdaptorJs.BlockingRequestQueueXHR = function(impl) {
+xhrBQJs.BlockingRequestQueueXHR = function(impl) {
 	// Set by 'open'
 	this.openArgs = null;
 	this.parent().constructor.call(this, impl);
 };
 
-xhrAdaptorJs.BlockingRequestQueueXHR.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
-xhrAdaptorJs.BlockingRequestQueueXHR.constructor = xhrAdaptorJs.BlockingRequestQueueXHR;
+xhrBQJs.BlockingRequestQueueXHR.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
+xhrBQJs.BlockingRequestQueueXHR.constructor = xhrBQJs.BlockingRequestQueueXHR;
 
 //////////////////////////////// 'private' functions /////////////////////////////////////////////
 
@@ -52,12 +52,12 @@ function createContinueCallback(delegateObj, requestHandlerEntry, args) {
 		requestHandlerEntry.isBlocked = false;
 
 		// Process all of the remaining requests
-		var requestQueue = xhrAdaptorJs.BlockingRequestQueueXHR.prototype.requestQueue;
+		var requestQueue = xhrBQJs.BlockingRequestQueueXHR.prototype.requestQueue;
 
 		if(requestQueue === undefined)
 			return;
 		while(requestQueue.length > 0) {
-			var request = xhrAdaptorJs.BlockingRequestQueueXHR.prototype.requestQueue.shift();
+			var request = xhrBQJs.BlockingRequestQueueXHR.prototype.requestQueue.shift();
 			request();
 		}
 	};
@@ -126,19 +126,19 @@ function processResponse(args) {
 /**
  * @summary The static response handler entry map
  *
- * This map stores all the response handler entries registered by {@link xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler}
+ * This map stores all the response handler entries registered by {@link xhrBQJs.BlockingRequestQueueXHR.registerResponseHandler}
  * The response handler entries are stored in 'key => value' pairs where the key is a URL regEx and the value is
  * an object with the following fields:
  *   handler: A function which represents the response handler set by the caller
  *   blocked: A boolean flag indicating whether requests matching this key are currently blocked.
  *
- * @memberOf xhrAdaptorJs.BlockingRequestQueueXHR
+ * @memberOf xhrBQJs.BlockingRequestQueueXHR
  * @static
  * @private
  * @type {Object}
  *
  */
-xhrAdaptorJs.BlockingRequestQueueXHR.prototype.responseHandlerMap = {};
+xhrBQJs.BlockingRequestQueueXHR.prototype.responseHandlerMap = {};
 
 /**
  * @summary The request queue
@@ -147,13 +147,13 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.responseHandlerMap = {};
  * either the parent classes 'send', 'onload' or 'onreadystatechange' method.
  * This allows requests to be 'suspended' and then later resumed by calling the closure.
  *
- * @memberOf xhrAdaptorJs.BlockingRequestQueueXHR
+ * @memberOf xhrBQJs.BlockingRequestQueueXHR
  * @static
  * @private
  * @type {Array}
  *
  */
-xhrAdaptorJs.BlockingRequestQueueXHR.prototype.requestQueue = [];
+xhrBQJs.BlockingRequestQueueXHR.prototype.requestQueue = [];
 //////////////////////////////////////////////////////////////////////////////////////////
 
 //
@@ -163,10 +163,10 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.requestQueue = [];
  * This simple override is used to capture the URL of the XHR request so it can be retrieved later when
  * 'send' is called.
  *
- * @memberOf xhrAdaptorJs.BlockingRequestQueueXHR
+ * @memberOf xhrBQJs.BlockingRequestQueueXHR
  * @private
  */
-xhrAdaptorJs.BlockingRequestQueueXHR.prototype.open = function(verb, url, async) {
+xhrBQJs.BlockingRequestQueueXHR.prototype.open = function(verb, url, async) {
 	this.openArgs = arguments;
 	this.parent().open.apply(this, this.openArgs);
 };
@@ -178,10 +178,10 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.open = function(verb, url, async)
  * response handler entry. If the response handler entry for the URL is blocked then the request is simply queued for later
  * execution.
  *
- * @memberOf xhrAdaptorJs.BlockingRequestQueueXHR
+ * @memberOf xhrBQJs.BlockingRequestQueueXHR
  * @private
  */
-xhrAdaptorJs.BlockingRequestQueueXHR.prototype.send = function() {
+xhrBQJs.BlockingRequestQueueXHR.prototype.send = function() {
 
 	var me = this;
 
@@ -194,7 +194,7 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.send = function() {
 	// There is a match so check if the request is blocked
 	if(handlerObj !== null && handlerObj.isBlocked) {
 		// Add the handler to the queue as a closure but do not call it yet
-		xhrAdaptorJs.BlockingRequestQueueXHR.prototype.requestQueue.push(function() {
+		xhrBQJs.BlockingRequestQueueXHR.prototype.requestQueue.push(function() {
 			me.parent().send.apply(me, args);
 		});
 		return;
@@ -210,10 +210,10 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.send = function() {
  * - Calling 'open' again on the underlying xhr object, passing the same arguments that were originally given.
  * - Calling 'send' again on the underlying xhr object.
  *
- * @memberOf xhrAdaptorJs.BlockingRequestQueueXHR
+ * @memberOf xhrBQJs.BlockingRequestQueueXHR
  * @private
  */
-xhrAdaptorJs.BlockingRequestQueueXHR.prototype.resend = function() {
+xhrBQJs.BlockingRequestQueueXHR.prototype.resend = function() {
 	this.open.apply(this, this.openArgs);
 	this.send.apply(this, arguments);
 };
@@ -223,11 +223,11 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.resend = function() {
  * @description
  * Retrieves the request URL that was passed to 'open'
  *
- * @memberOf xhrAdaptorJs.BlockingRequestQueueXHR
+ * @memberOf xhrBQJs.BlockingRequestQueueXHR
  * @private
  * @returns {String} The request URL or null if one has not been provided.
  */
-xhrAdaptorJs.BlockingRequestQueueXHR.prototype.getRequestURL = function() {
+xhrBQJs.BlockingRequestQueueXHR.prototype.getRequestURL = function() {
 
 	if(this.openArgs === null || this.openArgs.length < 2) {
 		return null;
@@ -240,11 +240,11 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.getRequestURL = function() {
  * @description
  * Retrieves the request verb that was passed to 'open'
  *
- * @memberOf xhrAdaptorJs.BlockingRequestQueueXHR
+ * @memberOf xhrBQJs.BlockingRequestQueueXHR
  * @private
  * @returns {String} The request verb or null if one has not been provided.
  */
-xhrAdaptorJs.BlockingRequestQueueXHR.prototype.getRequestVerb = function() {
+xhrBQJs.BlockingRequestQueueXHR.prototype.getRequestVerb = function() {
 
 	if(this.openArgs === null || this.openArgs.length < 1) {
 		return null;
@@ -296,19 +296,19 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.getRequestVerb = function() {
  * This example shows how to register a response handler that will be executed when
  * requesting any URL containing 'www.acme.com'.
  * </caption>
- *     xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("www.acme.com", responseHandler);
+ *     xhrBQJs.BlockingRequestQueueXHR.registerResponseHandler("www.acme.com", responseHandler);
  *
  * @function registerResponseHandler
- * @memberOf xhrAdaptorJs.BlockingRequestQueueXHR
+ * @memberOf xhrBQJs.BlockingRequestQueueXHR
  * @static
  * @param {String} urlRegEx The URL regular expression string (without the starting and ending forward slash).
  * @param {Function} responseHandler The response handler function that is to be invoked on a matching URL.
  * @param {Object} [handlerContext] This optional argument allows for a context object to be used when invoking the response handler.
  * 									If one is not provided then the BlockingRequestQueueXHR object will be used as the call context.
  */
-xhrAdaptorJs.BlockingRequestQueueXHR.prototype.registerResponseHandler = function(urlRegEx, responseHandler, handlerContext) {
+xhrBQJs.BlockingRequestQueueXHR.prototype.registerResponseHandler = function(urlRegEx, responseHandler, handlerContext) {
 
-	if(urlRegEx in xhrAdaptorJs.BlockingRequestQueueXHR.prototype.responseHandlerMap) {
+	if(urlRegEx in xhrBQJs.BlockingRequestQueueXHR.prototype.responseHandlerMap) {
 		console.error("Attempted to register handler for existing regex expression '" + urlRegEx + "'");
 		return;
 	}
@@ -325,9 +325,9 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.registerResponseHandler = functio
 		}
 	};
 
-	xhrAdaptorJs.BlockingRequestQueueXHR.prototype.responseHandlerMap[urlRegEx] = requestHandlerEntry;
+	xhrBQJs.BlockingRequestQueueXHR.prototype.responseHandlerMap[urlRegEx] = requestHandlerEntry;
 };
-xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler = xhrAdaptorJs.BlockingRequestQueueXHR.prototype.registerResponseHandler;
+xhrBQJs.BlockingRequestQueueXHR.registerResponseHandler = xhrBQJs.BlockingRequestQueueXHR.prototype.registerResponseHandler;
 
 /**
  * @summary unregister a response handler entry.
@@ -335,36 +335,36 @@ xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler = xhrAdaptorJs.Bloc
  * This method is used to unregister a previously registered response handler.
  *
  * @function unregisterResponseHandler
- * @memberOf xhrAdaptorJs.BlockingRequestQueueXHR
+ * @memberOf xhrBQJs.BlockingRequestQueueXHR
  * @static
  * @param {String} urlRegEx The URL regular expression string that was used to register the response handler
  *                          that should now be unregistered.
  */
-xhrAdaptorJs.BlockingRequestQueueXHR.prototype.unregisterResponseHandler = function(urlRegEx) {
-	delete xhrAdaptorJs.BlockingRequestQueueXHR.prototype.responseHandlerMap[urlRegEx];
+xhrBQJs.BlockingRequestQueueXHR.prototype.unregisterResponseHandler = function(urlRegEx) {
+	delete xhrBQJs.BlockingRequestQueueXHR.prototype.responseHandlerMap[urlRegEx];
 };
-xhrAdaptorJs.BlockingRequestQueueXHR.unregisterResponseHandler = xhrAdaptorJs.BlockingRequestQueueXHR.prototype.unregisterResponseHandler;
+xhrBQJs.BlockingRequestQueueXHR.unregisterResponseHandler = xhrBQJs.BlockingRequestQueueXHR.prototype.unregisterResponseHandler;
 
 /**
  * @summary unregister all response handler entries.
  *
  * @function clearResponseHandlers
- * @memberOf xhrAdaptorJs.BlockingRequestQueueXHR
+ * @memberOf xhrBQJs.BlockingRequestQueueXHR
  * @static
  */
-xhrAdaptorJs.BlockingRequestQueueXHR.prototype.clearResponseHandlers = function() {
-	xhrAdaptorJs.BlockingRequestQueueXHR.prototype.responseHandlerMap = {};
+xhrBQJs.BlockingRequestQueueXHR.prototype.clearResponseHandlers = function() {
+	xhrBQJs.BlockingRequestQueueXHR.prototype.responseHandlerMap = {};
 };
-xhrAdaptorJs.BlockingRequestQueueXHR.clearResponseHandlers = xhrAdaptorJs.BlockingRequestQueueXHR.prototype.clearResponseHandlers;
+xhrBQJs.BlockingRequestQueueXHR.clearResponseHandlers = xhrBQJs.BlockingRequestQueueXHR.prototype.clearResponseHandlers;
 
 /**
  * @summary Hook the 'onreadystatechange' event so that the response handlers can be checked.
  *
- * @memberOf xhrAdaptorJs.BlockingRequestQueueXHR
+ * @memberOf xhrBQJs.BlockingRequestQueueXHR
  * @static
  * @private
  */
-xhrAdaptorJs.BlockingRequestQueueXHR.prototype.eventDelegate = {
+xhrBQJs.BlockingRequestQueueXHR.prototype.eventDelegate = {
 	onreadystatechange : function () {
 		
 		var args = arguments;

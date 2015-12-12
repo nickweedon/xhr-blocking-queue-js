@@ -1,11 +1,11 @@
 {
-  "name": "xhr-adaptor-bq-js",
+  "name": "xhr-blocking-queue-js",
   "version": "0.1.0",
   "authors": [
     "Nick Weedon <nick@weedon.org.au>"
   ],
   "description": "Javascript XHR proxy library which provides an easily overridable 'adaptor' class that wraps the underlying XHR object (which may be a COM object on old IE browsers)",
-  "main": "dist/xhr-adaptor-bq-js.min.js",
+  "main": "dist/xhr-blocking-queue-js.min.js",
   "moduleType": [
     "amd"
   ],
@@ -19,7 +19,7 @@
     "xmlHttpRequest"
   ],
   "license": "MIT",
-  "homepage": "xhr-adaptor-bq-js.weedon.org.au",
+  "homepage": "xhr-blocking-queue-js.weedon.org.au",
   "ignore": [
     ".idea",
     "design",
