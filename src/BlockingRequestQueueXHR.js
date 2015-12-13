@@ -20,7 +20,7 @@ var xhrBQJs = xhrBQJs || {};
 xhrBQJs.BlockingRequestQueueXHR = function(impl) {
 	// Set by 'open'
 	this.openArgs = null;
-	this.parent().constructor.call(this, impl);
+	xhrAdaptorJs.XHRWrapper.prototype.constructor.call(this, impl);
 };
 
 xhrBQJs.BlockingRequestQueueXHR.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
@@ -168,7 +168,7 @@ xhrBQJs.BlockingRequestQueueXHR.prototype.requestQueue = [];
  */
 xhrBQJs.BlockingRequestQueueXHR.prototype.open = function(verb, url, async) {
 	this.openArgs = arguments;
-	this.parent().open.apply(this, this.openArgs);
+	xhrAdaptorJs.XHRWrapper.prototype.open.apply(this, this.openArgs);
 };
 
 /**
