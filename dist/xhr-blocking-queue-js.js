@@ -213,12 +213,12 @@ xhrBQJs.BlockingRequestQueueXHR.prototype.send = function() {
 	if(handlerObj !== null && handlerObj.isBlocked) {
 		// Add the handler to the queue as a closure but do not call it yet
 		xhrBQJs.BlockingRequestQueueXHR.prototype.requestQueue.push(function() {
-			me.parent().send.apply(me, args);
+			xhrAdaptorJs.XHRWrapper.prototype.send.apply(me, args);
 		});
 		return;
 	}
 
-	me.parent().send.apply(me, args);
+	xhrAdaptorJs.XHRWrapper.prototype.send.apply(me, args);
 };
 
 /**
