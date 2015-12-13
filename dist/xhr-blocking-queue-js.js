@@ -127,7 +127,7 @@ function processResponse(args) {
 	}
 
 	// There is a match but before calling the handler, check if the request is already blocked
-	if(handlerObj.isBlocked) {
+	if(!this._xhr.bypassFilter && handlerObj.isBlocked) {
 		this._xhr.resend();
 		console.debug("Failed to catch blocked request in time, ignoring response and adding request to queue.");
 		return;
@@ -210,7 +210,7 @@ xhrBQJs.BlockingRequestQueueXHR.prototype.send = function() {
 	var handlerObj = findResponseHandlerMatch.call(this, this.getRequestURL());
 	
 	// There is a match so check if the request is blocked
-	if(handlerObj !== null && handlerObj.isBlocked) {
+	if(!this.bypassFilter && handlerObj !== null && handlerObj.isBlocked) {
 		// Add the handler to the queue as a closure but do not call it yet
 		xhrBQJs.BlockingRequestQueueXHR.prototype.requestQueue.push(function() {
 			xhrAdaptorJs.XHRWrapper.prototype.send.apply(me, args);

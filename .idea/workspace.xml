@@ -53,8 +53,18 @@
       <file leaf-file-name="BlockingRequestQueueXHR.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4232715">
-              <caret line="148" column="2" selection-start-line="148" selection-start-column="2" selection-end-line="148" selection-end-column="2" />
+            <state vertical-scroll-proportion="0.23836127">
+              <caret line="341" column="3" selection-start-line="341" selection-start-column="3" selection-end-line="341" selection-end-column="3" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BlockingRequestQueueXHRTest.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/BlockingRequestQueueXHRTest.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="188" column="59" selection-start-line="188" selection-start-column="59" selection-end-line="188" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -110,8 +120,8 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/test/test-require-deps.js" />
         <option value="$PROJECT_DIR$/src/amd.js" />
-        <option value="$PROJECT_DIR$/test/BlockingRequestQueueXHRTest.js" />
         <option value="$PROJECT_DIR$/dist/xhr-blocking-queue-js.js" />
+        <option value="$PROJECT_DIR$/test/BlockingRequestQueueXHRTest.js" />
         <option value="$PROJECT_DIR$/src/BlockingRequestQueueXHR.js" />
       </list>
     </option>
@@ -547,15 +557,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_Tests - 2015.12.12 at 15h 41m 17s.xml">
-      <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
-    </history-entry>
-    <history-entry file="All_Tests - 2015.12.12 at 15h 42m 52s.xml">
-      <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
-    </history-entry>
-    <history-entry file="All_Tests - 2015.12.12 at 15h 44m 43s.xml">
-      <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
-    </history-entry>
     <history-entry file="All_Tests - 2015.12.12 at 15h 45m 56s.xml">
       <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
     </history-entry>
@@ -577,9 +578,18 @@
     <history-entry file="All_Tests - 2015.12.13 at 16h 29m 47s.xml">
       <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
     </history-entry>
+    <history-entry file="All_Tests - 2015.12.13 at 18h 15m 22s.xml">
+      <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
+    </history-entry>
+    <history-entry file="All_Tests - 2015.12.13 at 18h 23m 58s.xml">
+      <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
+    </history-entry>
+    <history-entry file="All_Tests - 2015.12.13 at 18h 27m 52s.xml">
+      <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22228146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="299" y="147" width="346" height="635" />
@@ -589,7 +599,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32719395" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32719395" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16239317" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
@@ -994,14 +1004,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/BlockingRequestQueueXHRTest.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dist/xhr-blocking-queue-js.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4232715">
@@ -1010,10 +1012,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test/BlockingRequestQueueXHRTest.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="188" column="59" selection-start-line="188" selection-start-column="59" selection-end-line="188" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4232715">
-          <caret line="148" column="2" selection-start-line="148" selection-start-column="2" selection-end-line="148" selection-end-column="2" />
+        <state vertical-scroll-proportion="0.23836127">
+          <caret line="341" column="3" selection-start-line="341" selection-start-column="3" selection-end-line="341" selection-end-column="3" />
           <folding />
         </state>
       </provider>

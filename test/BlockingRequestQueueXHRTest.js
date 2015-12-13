@@ -170,4 +170,56 @@ describe('BlockingRequestQueueXHR Test', function() {
         };
         secondXhr.send();
     });
+
+    it("Can bypass filter when bypassFilter is set", function (done) {
+        var firstXHRCallback = sinon.spy();
+        var secondXHRCallback = sinon.spy();
+        var responseHandlerCallback = sinon.spy();
+
+        var hasContinued = false;
+
+        var responseHandler = function(doContinue, xhr) {
+            if(xhr.responseText == "Authorization required!") {
+                responseHandlerCallback();
+
+                // Now that the first request is blocking, send a second request...
+                var secondXhr = new XMLHttpRequest();
+                secondXhr.bypassFilter = true;
+                secondXhr.open("get", "data/secondSentence.txt");
+                secondXhr.onreadystatechange = function() {
+
+                    if(this.readyState == 4) {
+                        sinon.assert.calledOnce(responseHandlerCallback);
+                        assert.equal( this.responseText, "hi this is another sentence", "Failed to retrieve data");
+                        assert.equal(hasContinued, false, "Second call should complete before the first call has 'continued' (bypassing the filter)");
+                        sinon.assert.notCalled(firstXHRCallback);
+                        done();
+                    }
+                };
+                secondXhr.send();
+
+                // After half a second, continue the first request and unblock the queue
+                setTimeout(function() {
+                    hasContinued = true;
+                    // Pass false to doContinue to signal that
+                    // we do not want this response to be passed back to the caller
+                    doContinue(false);
+                }, 500);
+            } else {
+                doContinue(true);
+            }
+        };
+        xhrBQJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
+        xhrAdaptorJs.manager.injectWrapper(xhrBQJs.BlockingRequestQueueXHR);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("get", "data/needAuth.txt");
+        xhr.onreadystatechange = function() {
+            if(this.readyState == 4) {
+                firstXHRCallback();
+            }
+        };
+        xhr.send();
+    });
+
 });
