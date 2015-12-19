@@ -42,8 +42,14 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: [ 'progress' ],
+    reporters: ['progress', 'junit'],
 
+    // the default configuration
+    junitReporter: {
+      outputDir: 'test_output', // results will be saved as $outputDir/$browserName.xml
+      suite: 'xhrBQJs', // suite will become the package name attribute in xml testsuite element
+      useBrowserName: true // add browser name to report and classes names
+    },
 
     // web server port
     port: 9876,
