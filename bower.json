@@ -34,7 +34,7 @@
     "package.json"
   ],
   "dependencies": {
-    "xhr-adaptor-js": "~0.1.0"
+    "xhr-adaptor-js": "~0.0.0"
   },
   "devDependencies": {
     "requirejs": "~2.1.15"
