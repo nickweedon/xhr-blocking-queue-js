@@ -222,4 +222,26 @@ describe('BlockingRequestQueueXHR Test', function() {
         xhr.send();
     });
 
+    it("Will bypass handler when bypassFilter is set", function (done) {
+
+        var responseHandlerCallback = sinon.spy();
+
+        xhrBQJs.BlockingRequestQueueXHR.registerResponseHandler("data", function(doContinue, xhr) {
+            responseHandlerCallback(doContinue, xhr);
+            doContinue();
+        });
+        xhrAdaptorJs.manager.injectWrapper(xhrBQJs.BlockingRequestQueueXHR);
+
+        var xhr = new XMLHttpRequest();
+        xhr.bypassFilter = true;
+        xhr.open("get", "data/needAuth.txt");
+        xhr.onreadystatechange = function() {
+            if(this.readyState == 4) {
+                sinon.assert.notCalled(responseHandlerCallback);
+                done();
+            }
+        };
+        xhr.send();
+    });
+
 });

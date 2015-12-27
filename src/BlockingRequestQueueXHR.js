@@ -97,7 +97,13 @@ function findResponseHandlerMatch(requestURL) {
 function processResponse(args) {
 
 	var me = this;
-	
+
+	// Don't process this with any kind of filter if 'bypassFilter' is set
+	if(this._xhr.bypassFilter) {
+		me.applyRealHandler(args);
+		return;
+	}
+
 	// Check each of the registered response handlers to see if their key (a regex)
 	// matches the URL that is being opened
 	var handlerObj = findResponseHandlerMatch.call(this._xhr, this._xhr.getRequestURL());
@@ -109,7 +115,7 @@ function processResponse(args) {
 	}
 
 	// There is a match but before calling the handler, check if the request is already blocked
-	if(!this._xhr.bypassFilter && handlerObj.isBlocked) {
+	if(handlerObj.isBlocked) {
 		this._xhr.resend();
 		console.debug("Failed to catch blocked request in time, ignoring response and adding request to queue.");
 		return;
