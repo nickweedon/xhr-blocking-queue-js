@@ -47,6 +47,15 @@ function createContinueCallback(delegateObj, requestHandlerEntry, args) {
 
 		if(relayEvent || relayEvent === undefined) {
 			delegateObj.applyRealHandler(args);
+			var eventQueue = delegateObj._xhr.eventQueue;
+
+			// Process any queue events such as 'onload' events that may have been
+			// triggered by the real XHR while the request was blocked
+			while(eventQueue.length > 0) {
+				var eventRealHandler = eventQueue.shift();
+				eventRealHandler();
+			}
+			delegateObj._xhr.eventQueue = null;
 		}
 
 		requestHandlerEntry.isBlocked = false;
@@ -82,6 +91,10 @@ function findResponseHandlerMatch(requestURL) {
 			return Object.getPrototypeOf(this).responseHandlerMap[key];
 	}
 	return null;
+}
+
+function isBlocked() {
+
 }
 
 /**
@@ -372,11 +385,21 @@ xhrBQJs.BlockingRequestQueueXHR.clearResponseHandlers = xhrBQJs.BlockingRequestQ
  */
 xhrBQJs.BlockingRequestQueueXHR.prototype.eventDelegate = {
 	onreadystatechange : function () {
-		
+
 		var args = arguments;
 		var xhr = this._xhr;
-		
+
+		if(xhr.readyState == 1) {
+			// Set up an event queue to serialize events such as 'onload' that
+			// may occur while the queue is blocking or about to continue
+			// This will be set to null once the real readystatechange == 4 has been fired
+			this._xhr.eventQueue = [];
+			return;
+		}
+
 		if(xhr.readyState == 4) {
+			// Flag the request as being processed so that we don't process it again if 'onLoad' is called
+			this._xhr.isProcessed = true;
 			processResponse.call(this, args);
 		} else {
 			// NB make sure you always call this as the ActiveX version of XHR
@@ -384,11 +407,20 @@ xhrBQJs.BlockingRequestQueueXHR.prototype.eventDelegate = {
 			// i.e. you will only get the first event where readyState == 1
 			this.applyRealHandler(args);
 		}
-	}
-	//TODO: Detect if onload is implemented and use in preference to onreadystatechange
-	/*
+	},
 	onload : function () {
-		processResponse.call(this, arguments);
+
+		var me = this;
+		var args = arguments;
+
+		if(this._xhr.eventQueue === null) {
+			this.applyRealHandler(args);
+			return;
+		}
+
+		this._xhr.eventQueue.push(function() {
+			me.applyRealHandler(args);
+		});
 	}
-	*/
 };
+

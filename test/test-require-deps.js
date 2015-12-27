@@ -13,6 +13,7 @@ require.config({
 
   paths: {
     requirejs: "../bower_components/requirejs/require",
+    jquery: "../bower_components/jquery/dist/jquery",
     "xhr-adaptor-js": "../bower_components/xhr-adaptor-js/dist/xhr-adaptor-js",
     "xhr-blocking-queue-js": "../dist/xhr-blocking-queue-js",
     "xhrTestUtils": "util/xhrTestUtils"

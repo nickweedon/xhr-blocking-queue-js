@@ -3,12 +3,14 @@ describe('BlockingRequestQueueXHR Test', function() {
     var xhrBQJs = null;
     var xhrAdaptorJs = null;
     var xhrTestUtils = null;
+    var $ = null;
 
     beforeEach(function(done) {
-        require(["xhr-blocking-queue-js", "xhr-adaptor-js", "xhrTestUtils"], function(xhrBQJsNS, xhrAdaptorJsNS, xhrTestUtilsNS) {
+        require(["xhr-blocking-queue-js", "xhr-adaptor-js", "xhrTestUtils", "jquery"], function(xhrBQJsNS, xhrAdaptorJsNS, xhrTestUtilsNS, jqueryNS) {
             xhrBQJs = xhrBQJsNS;
             xhrAdaptorJs = xhrAdaptorJsNS;
             xhrTestUtils = xhrTestUtilsNS;
+            $ = jqueryNS;
             done();
         });
     });
@@ -65,7 +67,49 @@ describe('BlockingRequestQueueXHR Test', function() {
         xhr.send();
     });
 
-    it("Will cause other calls to block after sending to URL that matches filter and before continue is called", function (done) {
+    it("Can use jquery to cause other calls to block after sending to URL that matches filter and before continue is called", function (done) {
+
+        var firstXHRCallback = sinon.spy();
+        var secondXHRCallback = sinon.spy();
+        var responseHandlerCallback = sinon.spy();
+
+        var hasContinued = false;
+
+        var responseHandler = function(doContinue, xhr) {
+            if(xhr.responseText == "Authorization required!") {
+                responseHandlerCallback();
+
+                // Now that the first request is blocking, send a second request...
+                $.get("/data/secondSentence.txt", function(data) {
+                    sinon.assert.calledOnce(responseHandlerCallback);
+                    assert.equal( data, "hi this is another sentence", "Failed to retrieve data");
+                    assert.equal(hasContinued, true, "Second call has completed before the first call has 'continued'");
+                    sinon.assert.notCalled(firstXHRCallback);
+                    done();
+                }).fail(function() {
+                   sinon.assert.fail("Ajax error!");
+                });
+
+                // After half a second, continue the first request and unblock the queue
+                setTimeout(function() {
+                    hasContinued = true;
+                    // Pass false to doContinue to signal that
+                    // we do not want this response to be passed back to the caller
+                    doContinue(false);
+                }, 500);
+            } else {
+                doContinue(true);
+            }
+        };
+        xhrBQJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
+        xhrAdaptorJs.manager.injectWrapper(xhrBQJs.BlockingRequestQueueXHR);
+
+        $.get("/data/needAuth.txt", function() {
+            firstXHRCallback();
+        });
+    });
+
+    it("Can cause other calls to block after sending to URL that matches filter and before continue is called", function (done) {
 
         var firstXHRCallback = sinon.spy();
         var secondXHRCallback = sinon.spy();
