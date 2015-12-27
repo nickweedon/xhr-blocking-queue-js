@@ -45,6 +45,21 @@ describe('BlockingRequestQueueXHR Test', function() {
         xhr.send();
     });
 
+    it("Can send via jquery to URLs not matching the filter", function (done) {
+
+        var requestHandler = {
+            doStuff: function() {
+                assert.ok(false, "Not expecting this to be called");
+            }
+        };
+        xhrBQJs.BlockingRequestQueueXHR.registerResponseHandler("http://www.google.com", requestHandler.doStuff, requestHandler);
+        xhrAdaptorJs.manager.injectWrapper(xhrBQJs.BlockingRequestQueueXHR);
+
+        $.get("data/simpleSentence.txt", function() {
+                done();
+        });
+    });
+
     it("Will call the callback when sending to URLs that match the filter", function (done) {
 
         var responseHandlerCallback = sinon.spy();

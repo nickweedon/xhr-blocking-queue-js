@@ -28,6 +28,19 @@ xhrBQJs.BlockingRequestQueueXHR.constructor = xhrBQJs.BlockingRequestQueueXHR;
 
 //////////////////////////////// 'private' functions /////////////////////////////////////////////
 
+function flushEventQueue(xhr) {
+
+	var eventQueue = xhr.eventQueue;
+
+	// Process any queue events such as 'onload' events that may have been
+	// triggered by the real XHR while the request was blocked
+	while(eventQueue.length > 0) {
+		var eventRealHandler = eventQueue.shift();
+		eventRealHandler();
+	}
+	xhr.eventQueue = null;
+}
+
 /**
  * Creates a callback which is associated to the provided requestHandlerObj
  * that, when called, will unblock the request queue, allowing requests to
@@ -47,15 +60,7 @@ function createContinueCallback(delegateObj, requestHandlerEntry, args) {
 
 		if(relayEvent || relayEvent === undefined) {
 			delegateObj.applyRealHandler(args);
-			var eventQueue = delegateObj._xhr.eventQueue;
-
-			// Process any queue events such as 'onload' events that may have been
-			// triggered by the real XHR while the request was blocked
-			while(eventQueue.length > 0) {
-				var eventRealHandler = eventQueue.shift();
-				eventRealHandler();
-			}
-			delegateObj._xhr.eventQueue = null;
+			flushEventQueue(delegateObj._xhr);
 		}
 
 		requestHandlerEntry.isBlocked = false;
@@ -114,6 +119,7 @@ function processResponse(args) {
 	// Don't process this with any kind of filter if 'bypassFilter' is set
 	if(this._xhr.bypassFilter) {
 		me.applyRealHandler(args);
+		flushEventQueue(me._xhr);
 		return;
 	}
 
@@ -124,6 +130,7 @@ function processResponse(args) {
 	if(handlerObj === null) {
 		// No match, just allow the request to continue as usual
 		me.applyRealHandler(args);
+		flushEventQueue(me._xhr);
 		return;
 	}
 

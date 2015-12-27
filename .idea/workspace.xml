@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js" line="49" mnemonic="1" />
-    <bookmark url="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js" line="385" mnemonic="2" />
+    <bookmark url="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js" line="392" mnemonic="2" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="369a8c62-f351-4907-9f93-2f6a28fde66b" name="Default" comment="">
@@ -54,21 +53,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BlockingRequestQueueXHR.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BlockingRequestQueueXHR.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.592592">
-              <caret line="413" column="29" selection-start-line="413" selection-start-column="29" selection-end-line="413" selection-end-column="29" />
+            <state vertical-scroll-proportion="0.6024735">
+              <caret line="132" column="33" selection-start-line="132" selection-start-column="33" selection-end-line="132" selection-end-column="33" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BlockingRequestQueueXHRTest.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BlockingRequestQueueXHRTest.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/BlockingRequestQueueXHRTest.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5053192">
-              <caret line="85" column="77" selection-start-line="85" selection-start-column="77" selection-end-line="85" selection-end-column="77" />
+            <state vertical-scroll-proportion="-12.344828">
+              <caret line="57" column="25" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -78,8 +77,20 @@
         <entry file="file://$PROJECT_DIR$/dist/xhr-blocking-queue-js.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-6.185185">
-              <caret line="433" column="4" selection-start-line="433" selection-start-column="4" selection-end-line="433" selection-end-column="4" />
-              <folding />
+              <caret line="440" column="4" selection-start-line="440" selection-start-column="4" selection-end-line="440" selection-end-column="4" />
+              <folding>
+                <marker date="1451222965076" expanded="true" signature="93:381" placeholder="/** For the AMD module version of the library, the xhrBQJs namespace ...*/" />
+                <marker date="1451222965076" expanded="true" signature="3315:3320" placeholder="{...}" />
+                <marker date="1451222965076" expanded="true" signature="3315:3665" placeholder="{...}" />
+                <marker date="1451222965076" expanded="true" signature="3315:3668" placeholder="{...}" />
+                <marker date="1451222965076" expanded="true" signature="4144:4444" placeholder="{...}" />
+                <marker date="1451222965076" expanded="true" signature="4255:4428" placeholder="{...}" />
+                <marker date="1451222965076" expanded="true" signature="4467:4471" placeholder="{...}" />
+                <marker date="1451222965076" expanded="true" signature="5004:5925" placeholder="{...}" />
+                <marker date="1451222965076" expanded="true" signature="5124:5157" placeholder="{...}" />
+                <marker date="1451222965076" expanded="true" signature="5548:5563" placeholder="{...}" />
+                <marker date="1451222965076" expanded="true" signature="5684:5828" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -134,9 +145,9 @@
         <option value="$PROJECT_DIR$/src/amd.js" />
         <option value="$PROJECT_DIR$/karma.conf.js" />
         <option value="$PROJECT_DIR$/test/test-require-deps.js" />
-        <option value="$PROJECT_DIR$/src/BlockingRequestQueueXHR.js" />
         <option value="$PROJECT_DIR$/dist/xhr-blocking-queue-js.js" />
         <option value="$PROJECT_DIR$/test/BlockingRequestQueueXHRTest.js" />
+        <option value="$PROJECT_DIR$/src/BlockingRequestQueueXHR.js" />
       </list>
     </option>
   </component>
@@ -585,15 +596,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_Tests - 2015.12.27 at 21h 52m 58s.xml">
-      <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
-    </history-entry>
-    <history-entry file="All_Tests - 2015.12.27 at 21h 53m 19s.xml">
-      <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
-    </history-entry>
-    <history-entry file="All_Tests - 2015.12.27 at 21h 53m 41s.xml">
-      <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
-    </history-entry>
     <history-entry file="All_Tests - 2015.12.27 at 22h 06m 39s.xml">
       <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
     </history-entry>
@@ -613,6 +615,15 @@
       <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
     </history-entry>
     <history-entry file="All_Tests - 2015.12.27 at 22h 44m 48s.xml">
+      <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
+    </history-entry>
+    <history-entry file="All_Tests - 2015.12.27 at 23h 24m 27s.xml">
+      <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
+    </history-entry>
+    <history-entry file="All_Tests - 2015.12.27 at 23h 27m 57s.xml">
+      <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
+    </history-entry>
+    <history-entry file="All_Tests - 2015.12.27 at 23h 29m 27s.xml">
       <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
     </history-entry>
   </component>
@@ -659,12 +670,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/dist/xhr-blocking-queue-js.js</url>
-          <line>433</line>
+          <line>440</line>
           <option name="timeStamp" value="73" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/dist/xhr-blocking-queue-js.js</url>
-          <line>71</line>
+          <line>76</line>
           <option name="timeStamp" value="74" />
         </line-breakpoint>
       </breakpoints>
@@ -1040,26 +1051,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.592592">
-          <caret line="413" column="29" selection-start-line="413" selection-start-column="29" selection-end-line="413" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dist/xhr-blocking-queue-js.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.185185">
-          <caret line="433" column="4" selection-start-line="433" selection-start-column="4" selection-end-line="433" selection-end-column="4" />
-          <folding />
+          <caret line="440" column="4" selection-start-line="440" selection-start-column="4" selection-end-line="440" selection-end-column="4" />
+          <folding>
+            <marker date="1451222965076" expanded="true" signature="93:381" placeholder="/** For the AMD module version of the library, the xhrBQJs namespace ...*/" />
+            <marker date="1451222965076" expanded="true" signature="3315:3320" placeholder="{...}" />
+            <marker date="1451222965076" expanded="true" signature="3315:3665" placeholder="{...}" />
+            <marker date="1451222965076" expanded="true" signature="3315:3668" placeholder="{...}" />
+            <marker date="1451222965076" expanded="true" signature="4144:4444" placeholder="{...}" />
+            <marker date="1451222965076" expanded="true" signature="4255:4428" placeholder="{...}" />
+            <marker date="1451222965076" expanded="true" signature="4467:4471" placeholder="{...}" />
+            <marker date="1451222965076" expanded="true" signature="5004:5925" placeholder="{...}" />
+            <marker date="1451222965076" expanded="true" signature="5124:5157" placeholder="{...}" />
+            <marker date="1451222965076" expanded="true" signature="5548:5563" placeholder="{...}" />
+            <marker date="1451222965076" expanded="true" signature="5684:5828" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/BlockingRequestQueueXHRTest.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5053192">
-          <caret line="85" column="77" selection-start-line="85" selection-start-column="77" selection-end-line="85" selection-end-column="77" />
+        <state vertical-scroll-proportion="-12.344828">
+          <caret line="57" column="25" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6024735">
+          <caret line="132" column="33" selection-start-line="132" selection-start-column="33" selection-end-line="132" selection-end-column="33" />
           <folding />
         </state>
       </provider>
