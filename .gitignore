@@ -3,4 +3,5 @@ node_modules/
 obj/
 doc_output/
 test_output/
+.idea/workspace.xml
 .readme.MD.html
