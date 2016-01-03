@@ -230,7 +230,8 @@ xhrBQJs.BlockingRequestQueueXHR.prototype.send = function() {
 	var me = this;
 
 	var args = arguments;
-	
+	this.sendArgs = args;
+
 	// Check each of the registered response handlers to see if their key (a regex)
 	// matches the URL that is being opened
 	var handlerObj = findResponseHandlerMatch.call(this, this.getRequestURL());
@@ -259,7 +260,7 @@ xhrBQJs.BlockingRequestQueueXHR.prototype.send = function() {
  */
 xhrBQJs.BlockingRequestQueueXHR.prototype.resend = function() {
 	this.open.apply(this, this.openArgs);
-	this.send.apply(this, arguments);
+	this.send.apply(this, this.sendArgs);
 };
 
 /**

@@ -60,7 +60,7 @@ describe('BlockingRequestQueueXHR Test', function() {
         });
     });
 
-    it("Will call the callback when sending to URLs that match the filter", function (done) {
+    it("Will call the callback when getting URLs that match the filter", function (done) {
 
         var responseHandlerCallback = sinon.spy();
 
@@ -73,6 +73,31 @@ describe('BlockingRequestQueueXHR Test', function() {
 
         xhr = new XMLHttpRequest();
         xhr.open("get", "data/simpleSentence.txt");
+        xhr.onreadystatechange = function() {
+            if(this.readyState == 4) {
+                sinon.assert.calledOnce(responseHandlerCallback);
+                done();
+            }
+        };
+        xhr.send();
+    });
+
+    it("Will call the callback when posting to URLs that match the filter", function (done) {
+
+        //FIXME: Need to actually check that the POST sent data and also add another test to check that blocked posts still send data
+        // Will probably need to set up a nodejs express server for this
+
+        var responseHandlerCallback = sinon.spy();
+
+        var responseHandler = function(doContinue) {
+            responseHandlerCallback();
+            doContinue();
+        };
+        xhrBQJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
+        xhrAdaptorJs.manager.injectWrapper(xhrBQJs.BlockingRequestQueueXHR);
+
+        xhr = new XMLHttpRequest();
+        xhr.open("post", "data/simpleSentence.txt");
         xhr.onreadystatechange = function() {
             if(this.readyState == 4) {
                 sinon.assert.calledOnce(responseHandlerCallback);
