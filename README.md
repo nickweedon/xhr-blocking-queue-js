@@ -18,4 +18,6 @@ TODO
 ----
 * Fix UT "Will call the callback when posting to URLs that match the filter"
 * Add unit test to ensure that eventQueue does not fire event when relayEvent == false (i.e. when doContinue(false) is called)
+* Create a unit test to check that resend works as expected, should probably set up a nodejs express test server for this (don't
+  want to interfere with xhr-adaptor by using fakeserver)
 

@@ -20,6 +20,7 @@ var xhrBQJs = xhrBQJs || {};
 xhrBQJs.BlockingRequestQueueXHR = function(impl) {
 	// Set by 'open'
 	this.openArgs = null;
+	this.requestHeaders = {};
 	xhrAdaptorJs.XHRWrapper.prototype.constructor.call(this, impl);
 };
 
@@ -202,6 +203,7 @@ xhrBQJs.BlockingRequestQueueXHR.prototype.requestQueue = [];
  * @private
  */
 xhrBQJs.BlockingRequestQueueXHR.prototype.open = function(verb, url, async) {
+	this.requestHeaders = {};
 	this.openArgs = arguments;
 	xhrAdaptorJs.XHRWrapper.prototype.open.apply(this, this.openArgs);
 };
@@ -250,9 +252,66 @@ xhrBQJs.BlockingRequestQueueXHR.prototype.send = function() {
  * @private
  */
 xhrBQJs.BlockingRequestQueueXHR.prototype.resend = function() {
+	// Opening the request will clear the request headers so save them before opening and then re-add them
+	var requestHeaders = this.getAllRequestHeaders();
 	this.open.apply(this, this.openArgs);
+	this.addRequestHeaders(requestHeaders);
 	this.send.apply(this, this.sendArgs);
 };
+
+xhrBQJs.BlockingRequestQueueXHR.prototype.setRequestHeader = function(headerKey, headerValue) {
+
+	var lcHeaderKey = headerKey.toLowerCase();
+
+	if(lcHeaderKey in this.requestHeaders) {
+		var headerValueArray = this.requestHeaders[lcHeaderKey];
+
+		headerValueArray.push(headerValue);
+	} else {
+		this.requestHeaders[lcHeaderKey] = [headerValue];
+	}
+
+	xhrAdaptorJs.XHRWrapper.prototype.setRequestHeader.apply(this, arguments);
+};
+
+xhrBQJs.BlockingRequestQueueXHR.prototype.getRequestHeaders = function(headerKey) {
+
+	var lcHeaderKey = headerKey.toLowerCase();
+
+	return lcHeaderKey in this.requestHeaders ? this.requestHeaders[lcHeaderKey] : [];
+};
+
+xhrBQJs.BlockingRequestQueueXHR.prototype.getAllRequestHeaders = function() {
+	return this.requestHeaders;
+};
+
+xhrBQJs.BlockingRequestQueueXHR.prototype.requestHeaderContains = function(headerKey, value) {
+
+	var lcHeaderKey = headerKey.toLowerCase();
+
+	return lcHeaderKey in this.requestHeaders ? this.requestHeaders[lcHeaderKey].indexOf(value) != -1 : false;
+};
+
+xhrBQJs.BlockingRequestQueueXHR.prototype.addRequestHeaders = function(requestHeaders) {
+
+	if(requestHeaders === null) {
+		return;
+	}
+
+	for(var requestHeaderKey in requestHeaders) {
+
+		if(!requestHeaders.hasOwnProperty(requestHeaderKey)) {
+			continue;
+		}
+
+		var valueArray = requestHeaders[requestHeaderKey];
+
+		for(var i = 0; i < valueArray.length; i++) {
+			this.setRequestHeader(requestHeaderKey, valueArray[i]);
+		}
+	}
+};
+
 
 /**
  * @summary Get the request URL
