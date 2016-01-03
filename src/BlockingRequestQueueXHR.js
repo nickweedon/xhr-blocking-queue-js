@@ -28,15 +28,20 @@ xhrBQJs.BlockingRequestQueueXHR.constructor = xhrBQJs.BlockingRequestQueueXHR;
 
 //////////////////////////////// 'private' functions /////////////////////////////////////////////
 
-function flushEventQueue(xhr) {
+function flushEventQueue(xhr, relayEvent) {
+
+	// Default to true
+	relayEvent = relayEvent === undefined ? true : relayEvent;
 
 	var eventQueue = xhr.eventQueue;
 
 	// Process any queue events such as 'onload' events that may have been
 	// triggered by the real XHR while the request was blocked
-	while(eventQueue.length > 0) {
+	while(eventQueue !== null && eventQueue.length > 0) {
 		var eventRealHandler = eventQueue.shift();
-		eventRealHandler();
+		if(relayEvent) {
+			eventRealHandler();
+		}
 	}
 	xhr.eventQueue = null;
 }
@@ -58,10 +63,14 @@ function createContinueCallback(delegateObj, requestHandlerEntry, args) {
 
 	return function (relayEvent) {
 
-		if(relayEvent || relayEvent === undefined) {
+		// Default to true
+		relayEvent = relayEvent === undefined ? true : relayEvent;
+
+		if(relayEvent) {
 			delegateObj.applyRealHandler(args);
-			flushEventQueue(delegateObj._xhr);
 		}
+
+		flushEventQueue(delegateObj._xhr, relayEvent);
 
 		requestHandlerEntry.isBlocked = false;
 

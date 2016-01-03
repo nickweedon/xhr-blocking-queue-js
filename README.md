@@ -17,4 +17,5 @@ Run:
 TODO
 ----
 * Fix UT "Will call the callback when posting to URLs that match the filter"
+* Add unit test to ensure that eventQueue does not fire event when relayEvent == false (i.e. when doContinue(false) is called)
 
