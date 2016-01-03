@@ -71,6 +71,28 @@ describe('BlockingRequestQueueXHR Test', function() {
             //assert.ok(xhr !== undefined, "Failed to instantiate xhrBQJs.BlockingRequestQueueXHR");
         });
 
+        it("Can check for the existence of a request header", function () {
+            var xhr = new xhrBQJs.BlockingRequestQueueXHR(xhrTestUtils.createNativeXhr());
+
+            xhr.open("GET", "http://www.nonsense.com");
+            xhr.setRequestHeader("content-type", "blah");
+            xhr.setRequestHeader("content-type", "something else");
+            xhr.setRequestHeader("custom-header", "somevalue");
+
+            assert.ok(xhr.isRequestHeaderSet("custom-header"));
+        });
+
+        it("Can check for the absense of a request header", function () {
+            var xhr = new xhrBQJs.BlockingRequestQueueXHR(xhrTestUtils.createNativeXhr());
+
+            xhr.open("GET", "http://www.nonsense.com");
+            xhr.setRequestHeader("content-type", "blah");
+            xhr.setRequestHeader("content-type", "something else");
+            xhr.setRequestHeader("custom-header", "somevalue");
+
+            assert.notOk(xhr.isRequestHeaderSet("crazy-header"));
+        });
+
         it("Can check if a request header contains a value", function () {
             var xhr = new xhrBQJs.BlockingRequestQueueXHR(xhrTestUtils.createNativeXhr());
 

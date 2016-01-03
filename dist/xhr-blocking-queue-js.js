@@ -310,6 +310,14 @@ xhrBQJs.BlockingRequestQueueXHR.prototype.requestHeaderContains = function(heade
 	return lcHeaderKey in this.requestHeaders ? this.requestHeaders[lcHeaderKey].indexOf(value) != -1 : false;
 };
 
+xhrBQJs.BlockingRequestQueueXHR.prototype.isRequestHeaderSet = function(headerKey) {
+
+	var lcHeaderKey = headerKey.toLowerCase();
+
+	return lcHeaderKey in this.requestHeaders;
+};
+
+
 xhrBQJs.BlockingRequestQueueXHR.prototype.addRequestHeaders = function(requestHeaders) {
 
 	if(requestHeaders === null) {
