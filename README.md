@@ -17,7 +17,12 @@ Run:
 TODO
 ----
 * Fix UT "Will call the callback when posting to URLs that match the filter"
-* Add unit test to ensure that eventQueue does not fire event when relayEvent == false (i.e. when doContinue(false) is called)
 * Create a unit test to check that resend works as expected, should probably set up a nodejs express test server for this (don't
   want to interfere with xhr-adaptor by using fakeserver)
 
+Developer Notes
+---------------
+* Looked at adding the ability to have the queue block when the number of entries reaches the prescribed queue limit
+  however it seems that this is not possible since 'blocking' in a loop for instance will prevent all processing from
+  continuing which would prevent the requesthandler from finishing thereby leading to deadlock. Maybe there is some
+  clever way around this?

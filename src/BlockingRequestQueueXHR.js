@@ -152,7 +152,13 @@ function processResponse(args) {
 	}
 	
 	// Set the matching handler to blocked and invoke it
-	handlerObj.invokeHandler(this, args);
+	try {
+		handlerObj.invokeHandler(this, args);
+	} catch(e) {
+		console.error("Exception thrown in BlockingRequestQueue response handler:", e);
+		doContinue = createContinueCallback(this, handlerObj, args);
+		doContinue(false);
+	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 

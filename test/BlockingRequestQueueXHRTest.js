@@ -289,7 +289,6 @@ describe('BlockingRequestQueueXHR Test', function() {
         it("Can cause other calls to block after sending to URL that matches filter and before continue is called", function (done) {
 
             var firstXHRCallback = sinon.spy();
-            var secondXHRCallback = sinon.spy();
             var responseHandlerCallback = sinon.spy();
 
             var hasContinued = false;
@@ -337,7 +336,122 @@ describe('BlockingRequestQueueXHR Test', function() {
             xhr.send();
         });
 
+        it("Will continue if an exception occurs", function (done) {
+
+            var firstXHRCallback = sinon.spy();
+            var responseHandlerCallback = sinon.spy();
+
+            var responseHandler = function (doContinue, xhr) {
+                if (xhr.responseText == "Authorization required!") {
+                    responseHandlerCallback();
+
+                    // Now that the first request is blocking, send a second request...
+                    var secondXhr = new XMLHttpRequest();
+                    secondXhr.open("get", "data/secondSentence.txt");
+                    secondXhr.onreadystatechange = function () {
+
+                        if (this.readyState == 4) {
+                            sinon.assert.calledOnce(responseHandlerCallback);
+                            assert.equal(this.responseText, "hi this is another sentence", "Failed to retrieve data");
+                            sinon.assert.notCalled(firstXHRCallback);
+                            done();
+                        }
+                    };
+                    secondXhr.send();
+
+                    throw "Some silly error";
+                } else {
+                    doContinue(true);
+                }
+            };
+            xhrBQJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
+            xhrAdaptorJs.manager.injectWrapper(xhrBQJs.BlockingRequestQueueXHR);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("get", "data/needAuth.txt");
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    firstXHRCallback();
+                }
+            };
+            xhr.send();
+        });
+
+/*
+        //TODO: Finish this if possible or delete (may not be possible to do this)
+        it("Will block all other calls when queue limit is reached", function (done) {
+            var firstXHRCallback = sinon.spy();
+            var secondXHRCallback = sinon.spy();
+            var responseHandlerCallback = sinon.spy();
+            var elapsedTime = 0;
+
+            var hasContinued = false;
+
+            var responseHandler = function (doContinue, xhr) {
+                if (xhr.responseText == "Authorization required!") {
+                    responseHandlerCallback();
+
+                    // Now that the first request is blocking, send a second request...
+                    var secondXhr = new XMLHttpRequest();
+                    secondXhr.open("get", "data/secondSentence.txt");
+                    secondXhr.onreadystatechange = function () {
+                        if (this.readyState == 4) {
+                            secondXHRCallback();
+                        }
+                    };
+                    secondXhr.send();
+
+                    var thirdXhr = new XMLHttpRequest();
+                    thirdXhr.open("get", "data/secondSentence.txt");
+                    thirdXhr.onreadystatechange = function () {
+                        if (this.readyState == 4) {
+                            sinon.assert.calledOnce(responseHandlerCallback);
+                            assert.equal(this.responseText, "hi this is another sentence", "Failed to retrieve data");
+                            assert.equal(hasContinued, true, "Second call has completed before the first call has 'continued'");
+                            sinon.assert.notCalled(firstXHRCallback);
+                            sinon.assert.calledOnce(secondXHRCallback);
+                            assert.isAbove(elapsedTime, 500, 'Blocking queue should be full and block');
+                            done();
+                        }
+                    };
+                    var dateOne = new Date();
+                    var timeOne = dateOne.getTime();
+                    thirdXhr.send();
+                    var dateTwo = new Date();
+                    var timeTwo = dateTwo.getTime();
+                    elapsedTime = timeTwo - timeOne;
+                    console.debug('elapsedTime: ' + elapsedTime);
+
+                    // After half a second, continue the first request and unblock the queue
+                    setTimeout(function () {
+                        hasContinued = true;
+                        // Pass false to doContinue to signal that
+                        // we do not want this response to be passed back to the caller
+                        doContinue(false);
+                    }, 500);
+                } else {
+                    doContinue(true);
+                }
+            };
+            xhrBQJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
+            xhrAdaptorJs.manager.injectWrapper(xhrBQJs.BlockingRequestQueueXHR);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("get", "data/needAuth.txt");
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    firstXHRCallback();
+                }
+            };
+            xhr.send();
+
+        });
+*/
+
+
         it("Will allow blocked request to be overriden with new call and will block all requests until continue", function (done) {
+
+            // Ensure that a blocked request can be modified and then queued while discarding the original request.
 
             var responseHandlerCallback = sinon.spy();
             var firstXHRCallback = sinon.spy();
