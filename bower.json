@@ -19,7 +19,11 @@
     "xmlHttpRequest"
   ],
   "license": "MIT",
-  "homepage": "xhr-blocking-queue-js.weedon.org.au",
+  "homepage": "http://git.redwyvern.com/SAML/xhr-blocking-queue-js",
+  "repository": {
+    "type": "git",
+    "url": "git://git.redwyvern.com/SAML/xhr-blocking-queue-js.git"
+  },
   "ignore": [
     ".idea",
     "design",
