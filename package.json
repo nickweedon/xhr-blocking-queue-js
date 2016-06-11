@@ -1,7 +1,7 @@
 {
   "name": "xhr-blocking-queue-js",
   "version": "0.0.1",
-  "description": "Javascript XHR proxy library which provides an easily overridable 'adaptor' class that wraps the underlying XHR object (which may be a COM object on old IE browsers)",
+  "description": "Javascript XHR proxy library built on xhr-adaptor-js that allows xhr requests to be queued",
   "main": "saml-ecp-js.js",
   "directories": {
     "test": "test"
@@ -11,16 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@git.weedon.org.au:red-wyvern/xhr-blocking-queue-js.git"
+    "url": "git://github.com/nickweedon/xhr-blocking-queue-js.git"
   },
   "keywords": [
-    "saml",
-    "ecp",
-    "sso",
     "xhr",
     "ajax",
     "js",
-    "javascript"
+    "javascript",
+	"queue"
   ],
   "author": "Nick Weedon",
   "license": "ISC",
