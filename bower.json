@@ -4,8 +4,8 @@
   "authors": [
     "Nick Weedon <nick@weedon.org.au>"
   ],
-  "description": "Javascript XHR proxy library which provides an easily overridable 'adaptor' class that wraps the underlying XHR object (which may be a COM object on old IE browsers)",
-  "main": "dist/xhr-blocking-queue-js.min.js",
+  "description": "Library that allows XHR requests to be transparently queued",
+  "main": "dist/xhr-blocking-queue-js.js",
   "moduleType": [
     "amd"
   ],
